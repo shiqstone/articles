@@ -31,7 +31,7 @@ func Encode(w io.Writer, req *Request) { ...
 等等。
 
 ## Contexts（上下文）
-`context.Context`类型的值带有跨越API和进程边界的安全凭证，跟踪信息，截止时间和取消信号[^1]。从传入RPCs和HTTP请求开始，一直到请求输出，Go程序在整个函数调用链中都显式传递Contexts。
+`context.Context`类型的值带有跨越API和进程边界的安全凭证，跟踪信息，截止时间和取消信号<sup>[1](#mfn1)</sup>。从传入RPCs和HTTP请求开始，一直到请求输出，Go程序在整个函数调用链中都显式传递Contexts。
 
 大多数使用到Context的函数，都应当把Context作为函数的第一个参数，如：
 ```golang
@@ -95,7 +95,7 @@ t := []string{}
 所有顶级导出的名称都应该有文档注释，重要的未导出类型或函数声明也应如此。有关注释约定的更多信息，请参考(https://golang.org/doc/effective_go.html#commentary)
 
 ## Don't Panic （不要使用`panic`）
-请参阅(https://golang.org/doc/effective_go.html#errors)。不要使用`panic`作为一般错误的处理，请使用error和多返回值的方式。
+请参阅(https://golang.org/doc/effective_go.html#errors) 。不要使用`panic`作为一般错误的处理，请使用error和多返回值的方式。
 
 ## Error Strings （错误信息）
 错误字符串不应该以大写字母开头（除非以专有名词或首字母缩写开头）或者以标点符号结尾，因为错误信息通常会跟在其他上下文之后打印输出。所以，应该使用`fmt.Errorf("something bad")`而不是`fmt.Errorf("Something bad")`，这样`log.Printf("Reading %s: %v", filename, err)`这样的格式中不会有额外的大写字母出现。这并不适用于日志记录，因为日志是隐式面向行的，而不是用于组合到其它信息中。
@@ -115,7 +115,7 @@ t := []string{}
 请尽量保持并发代码足够简单，从而更容易的确认协程的生命周期。如果这不可行，请用文档说明协程何时以及为什么会退出。
 
 ## Handle Errors （错误处理）
-请参阅(https://golang.org/doc/effective_go.html#errors)，不要使用`_`变量丢弃错误。如果函数返回一个错误，请检查它以保证函数执行成功。处理函数返回的错误，将其返回或者在真正异常的情况下抛出panic。
+请参阅(https://golang.org/doc/effective_go.html#errors) ，不要使用`_`变量丢弃错误。如果函数返回一个错误，请检查它以保证函数执行成功。处理函数返回的错误，将其返回或者在真正异常的情况下抛出panic。
 
 ## Imports （导入包）
 避免重命名导入，除非为了避免包名冲突；好的包命名应该不需要重命名。发生冲突时，最好重命名本地或特殊项目的导入。
@@ -278,7 +278,7 @@ Go代码没有对于代码行长度的硬性限制，但是应避免影响阅读
 实际上，这是一个和函数应该多长完全相同的建议。没有这样一个规则说“绝不应该有超过N行的函数”，但是肯定存在类似函数太长、太零碎而不连贯这样的问题，解决方法是改变函数的边界位置，而不是执着于行数。
 
 ## Mixed Caps (混合大小写)
-请参阅 (https://golang.org/doc/effective_go.html#mixed-caps)。即使违反了其他语言的约定也应如此。例如一个未导出的常量应该命名为 maxLength 而不是 MaxLength 或 MAX_LENGTH
+请参阅 (https://golang.org/doc/effective_go.html#mixed-caps) 。即使违反了其他语言的约定也应如此。例如一个未导出的常量应该命名为 maxLength 而不是 MaxLength 或 MAX_LENGTH
 
 另见[Initialisms](#Initialisms)
 
@@ -365,7 +365,7 @@ package main
 
 ## Package Names （包命名）
 包中对名称的所有引用都将用包名来完成，所以你可以从标识符中省略该名称。例如，如果有一个包名为`chubby`，你不需要将类型命名为`ChubbyFile`，这样调用方需要写成`chubby.ChubbyFile`，而是应该将类型命名为`File`，这样调用方代码可以写成`chubby.File`。避免使用无意义的包名，如 util、common、misc、api、types、interfaces等。
-更多信息，请参阅(http://golang.org/doc/effective_go.html#package-names)和(http://blog.golang.org/package-names)
+更多信息，请参阅(http://golang.org/doc/effective_go.html#package-names) 和 (http://blog.golang.org/package-names)
 
 ## Pass Values （传值）
 不要仅为了节省几个字节把指针作为函数参数。如果一个函数在整个过程中只引用它的参数x作为*x，那么这个参数不应该是一个指针。常见的实例包括传递给`string(*string)`的指针或指向结果值`(*io.Reader)`的指针。在这两种情况下，值本身都是固定大小，可以直接传递。这个建议不适用于大型结构体，或者是现在还很小但是以后可能会变大的结构体。
@@ -416,7 +416,7 @@ Go语言中的变量名应该尽量简短，对于范围有效的局部变量尤
 基本规则是：使用变量的地方离声明越远，命名应越具有描述性。对于方法的接收器，一两个字母就足够了，诸如循环索引和读取器之类的公共变量可以是单个字母(i, r)。特别的事物以及全局变量则需要更具描述性的名称。
 
 # 说明
-[^1]:参考代码注释 (https://github.com/golang/go/blob/master/src/context/context.go)
+<a name="mfn1">1</a>:参考代码注释 (https://github.com/golang/go/blob/master/src/context/context.go)
 Package context defines the Context type, which carries deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes.
 [^2]:此处翻译不确定，原文如下：
 A function that is never request-specific may use context.Background(), but err on the side of passing a Context even if you think you don't need to. The default case is to pass a Context; only use context.Background() directly if you have a good reason why the alternative is a mistake.
