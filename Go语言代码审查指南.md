@@ -8,11 +8,11 @@
 - [Crypto Rand](#Crypto-Rand)
 - [Declaring Empty Slices](#Declaring-Empty-Slices-声明空切片)
 - [Doc Comments](#Doc-Comments-文档注释)
-- [Don't Panic](#Don't-Panic-不要使用panic)
+- [Don't Panic](#Don't-Panic-不要使用-panic-)
 - [Error Strings](#Error-Strings-错误信息)
 - [Examples](#Examples-示例)
 - [Goroutine Lifetimes](#Goroutine-Lifetimes-Goroutine-生命周期)
-- [Handle Errors](Handle-Errors-错误处理)
+- [Handle Errors](#Handle-Errors-错误处理)
 - [Imports](#Imports-导入包)
 - [Import Blank](#Import-Blank-导入空)
 - [Import Dot](#Import-Dot-导入点)
@@ -58,7 +58,7 @@ func Encode(w io.Writer, req *Request) { ...
 ```
 等等。
 
-## Contexts（上下文）
+## Contexts （上下文）
 `context.Context`类型的值带有跨越API和进程边界的安全凭证，跟踪信息，截止时间和取消信号<sup>[1](#mfn1)</sup>。从传入RPCs和HTTP请求开始，一直到请求输出，Go程序在整个函数调用链中都显式传递Contexts。
 
 大多数使用到Context的函数，都应当把Context作为函数的第一个参数，如：
