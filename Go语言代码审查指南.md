@@ -1,9 +1,37 @@
 [译]Go语言代码审查指南
 ===
 
-# 目录
-
-[TOC]
+- [Gofmt](#Gofmt)
+- [Comment Sentences](#Comment-Sentences-（注释语句）)
+- [Contexts](#Contexts（上下文）)
+- [Coping](#Coping （复制）)
+- [Crypto Rand](#Crypto Rand)
+- [Declaring Empty Slices](#Declaring Empty Slices （声明空切片）)
+- [Doc Comments](#Doc Comments （文档注释）)
+- [Don't Panic](#Don't Panic （不要使用`panic`）)
+- [Error Strings](#Error Strings （错误信息）)
+- [Examples](#Examples)
+- [Goroutine Lifetimes](#Goroutine Lifetimes （Goroutine 生命周期）)
+- [Handle Errors](Handle Errors （错误处理）)
+- [Imports](#Imports （导入包）)
+- [Import Blank](#Import Blank （导入“空”）)
+- [Import Dot](#Import Dot （导入“点”）)
+- [In-Band Errors](#In-Band Errors)
+- [Indent Error Flow](#Indent Error Flow)
+- [Initialisms](#Initialisms （首字母缩写）)
+- [Interfaces](#Interfaces （接口）)
+- [Line Length](#Line Length （行长度）)
+- [Mixed Caps](#Mixed Caps (混合大小写))
+- [Named Result Parameters](#Named Result Parameters （结果参数命名）)
+- [Naked Returns](#Naked Returns)
+- [Package Comments](#Package Comments （包注释））
+- [Package Names](#Package Names （包命名）)
+- [Pass Values](#Pass-Values-（传值）)
+- [Receiver Names](#Receiver-Names-（接受器名称）)
+- [Receiver Type](#Receiver-Type-（接收器类型）)
+- [Synchronous Functions](#Synchronous-Functions-（同步函数）)
+- [Useful Test Failures](#Useful Test Failures （有用的失败测试）)
+- [Variable Names](#Variable-Names)
 
 原文地址 https://github.com/golang/go/wiki/CodeReviewComments
 更新时间2020-09-17
@@ -417,12 +445,21 @@ Go语言中的变量名应该尽量简短，对于范围有效的局部变量尤
 
 # 说明
 <a name="mfn1">1</a>: 参考代码注释 (https://github.com/golang/go/blob/master/src/context/context.go)
+
 Package context defines the Context type, which carries deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes.
+
 <a name="mfn3">2</a>: 此处翻译不确定，原文如下：
+
 A function that is never request-specific may use context.Background(), but err on the side of passing a Context even if you think you don't need to. The default case is to pass a Context; only use context.Background() directly if you have a good reason why the alternative is a mistake.
+
 结合代码注释以及官方博文(https://blog.golang.org/context)讨论，推断 Background 方法会返回一个 non-nil 的空 Context，通常用在主函数、初始化、测试等地方，作为请求开始的根 Context；因此除了这些起始位置，一般不建议在中间代码使用Background()。
+
 <a name="mfn3">3</a>: 当导入一个包时，该包下的文件里所有init()函数都会被执行，然而，有些时候我们并不需要把整个包都导入进来，仅仅是是希望它执行init()函数而已。这个时候就可以使用 import _ 引用该包。即使用`import _ "pkg"`只是引用该包，仅仅是为了调用init()函数，所以无法通过包名来调用包中的其他函数。
+
 <a name="mfn4">4</a>: 不是特别确定此处In-Band的含义，个人推测In-Band表示返回值中混合了表示错误信息的值，需要调用方区别处理，而Out-Band
+
 <a name="mfn5">5</a>: 此处原文有补充说明，翻译不确定，绝大多数情况下"id"不是用以指代“本我”和“超我”
+
 which is pretty much all cases when it's not the "id" as in "ego", "superego"
+
 <a name="mfn6">6</a>: 不确定含义，原文 familiarity admits brevity
