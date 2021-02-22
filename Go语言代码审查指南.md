@@ -2,8 +2,8 @@
 ===
 
 - [Gofmt](#Gofmt)
-- [Comment Sentences](#Comment-Sentences-（注释语句）)
-- [Contexts](#Contexts（上下文）)
+- [Comment Sentences](#comment-sentences-注释语句)
+- [Contexts](#Contexts-上下文)
 - [Coping](#Coping （复制）)
 - [Crypto Rand](#Crypto Rand)
 - [Declaring Empty Slices](#Declaring Empty Slices （声明空切片）)
