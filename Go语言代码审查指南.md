@@ -37,7 +37,7 @@ func Encode(w io.Writer, req *Request) { ...
 ```golang
 func F(ctx context.Context, /* other arguments */) {}
 ```
-如果一个函数还没有特定请求Context，可以使用`context.Background()`获取，但需要将err和Context同时传递，即使你认为你不需要。默认情况下只传递 Context；只有在你有充分的理由认为这是错误的，才能直接使用context.Background()。[^2]
+如果一个函数还没有特定请求Context，可以使用`context.Background()`获取，但需要将err和Context同时传递，即使你认为你不需要。默认情况下只传递 Context；只有在你有充分的理由认为这是错误的，才能直接使用context.Background()。<sup>[2](#mfn2)</sup>
 
 不要将Context成员添加到结构体类型中，而是应该将ctx参数添加到该类型需要传递的每一个方法上。一个例外是方法签名必须与标准库或第三方库中接口定义相匹配。
 
@@ -138,8 +138,8 @@ import (
 ```
 [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)会帮你做这件事。
 
-## Import Blank （导入“空”）
-仅出于使用包的副作用而导入一个包时（使用语法`import _ "pkg"`）[^3]，应仅在程序的main包或者需要它们的测试中导入。
+## Import Blank （导入“空”）<sup>[4](#mfn4)</sup>
+仅出于使用包的副作用而导入一个包时（使用语法`import _ "pkg"`）<sup>[3](#mfn3)</sup>，应仅在程序的main包或者需要它们的测试中导入。
 
 ## Import Dot （导入“点”）
 部分包由于循环依赖，不能作为测试包的一部分进行测试，使用`import .`形式导入很有用，
@@ -224,7 +224,7 @@ if err != nil {
 ## Initialisms （首字母缩写）
 名称中的缩写词或首字母缩写词（例如："URL" 或 "NATO"）保持一致的大小写。例如，"URL"应该显示为"URL" 或 "url" (比如 "urlPony", 或 "URLPony")，而不应使用"Url"。再例如：应使用ServeHTTP 而不是 ServeHttp。对于多个已初始化的“缩写词”，请使用"xmlHTTPRequest" 或 "XMLHTTPRequest"。
 
-本规则同样适用于"ID"作为"identifier"缩写的情况[^5]，所以应该用"appID" 而不是 "appId"。
+本规则同样适用于"ID"作为"identifier"缩写的情况<sup>[5](#mfn5)</sup>，所以应该用"appID" 而不是 "appId"。
 
 使用`protocol buffer`编译器生成的代码不在本规则限定内。人工编写的代码应比机器编写的代码有更高的标准。
 
@@ -372,7 +372,7 @@ package main
 
 
 ## Receiver Names （接受器名称）
-方法接收器的名称应反映其身份，通常，使用其类型的一到两个字母缩写就足够了（如：用"c" 或 "cl" 表示 "Client"）。不要使用通用名称，如："me", "this"或"self"等，这是面向对象语言的典型标识符，会赋予方法特殊的含义。在Go语言中，方法的接收器只是另一个参数，因此应相应的命名。该名称不必像方法参数那样具有描述性，因为它的作用是显而易见的，并且不提供任何文档目的。名称可以非常短，因为它将出现在该类型每个方法的几乎每一行上[^6]。也应当保持一致，如果在一个方法的接收器称为"c"，则在其它方法中就不要用"cl"。
+方法接收器的名称应反映其身份，通常，使用其类型的一到两个字母缩写就足够了（如：用"c" 或 "cl" 表示 "Client"）。不要使用通用名称，如："me", "this"或"self"等，这是面向对象语言的典型标识符，会赋予方法特殊的含义。在Go语言中，方法的接收器只是另一个参数，因此应相应的命名。该名称不必像方法参数那样具有描述性，因为它的作用是显而易见的，并且不提供任何文档目的。名称可以非常短，因为它将出现在该类型每个方法的几乎每一行上<sup>[6](#mfn6)</sup>。也应当保持一致，如果在一个方法的接收器称为"c"，则在其它方法中就不要用"cl"。
 
 ## Receiver Type （接收器类型）
 方法应该使用值接收器还是指针接收器是很难选择的，特别是对于Go新手程序员。如果有疑问，那就使用指针。但是有的时候出于效率的考虑，使用值接收器是合理的，例如小的不变的结构体或基础数据类型。以下是一些有用的指导：
@@ -416,13 +416,13 @@ Go语言中的变量名应该尽量简短，对于范围有效的局部变量尤
 基本规则是：使用变量的地方离声明越远，命名应越具有描述性。对于方法的接收器，一两个字母就足够了，诸如循环索引和读取器之类的公共变量可以是单个字母(i, r)。特别的事物以及全局变量则需要更具描述性的名称。
 
 # 说明
-<a name="mfn1">1</a>:参考代码注释 (https://github.com/golang/go/blob/master/src/context/context.go)
+<a name="mfn1">1</a>: 参考代码注释 (https://github.com/golang/go/blob/master/src/context/context.go)
 Package context defines the Context type, which carries deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes.
-[^2]:此处翻译不确定，原文如下：
+<a name="mfn3">2</a>: 此处翻译不确定，原文如下：
 A function that is never request-specific may use context.Background(), but err on the side of passing a Context even if you think you don't need to. The default case is to pass a Context; only use context.Background() directly if you have a good reason why the alternative is a mistake.
 结合代码注释以及官方博文(https://blog.golang.org/context)讨论，推断 Background 方法会返回一个 non-nil 的空 Context，通常用在主函数、初始化、测试等地方，作为请求开始的根 Context；因此除了这些起始位置，一般不建议在中间代码使用Background()。
-[^3]:当导入一个包时，该包下的文件里所有init()函数都会被执行，然而，有些时候我们并不需要把整个包都导入进来，仅仅是是希望它执行init()函数而已。这个时候就可以使用 import _ 引用该包。即使用`import _ "pkg"`只是引用该包，仅仅是为了调用init()函数，所以无法通过包名来调用包中的其他函数。
-[^4]:不是特别确定此处In-Band的含义，个人推测In-Band表示返回值中混合了表示错误信息的值，需要调用方区别处理，而Out-Band
-[^5]:此处原文有补充说明，翻译不确定，绝大多数情况下"id"不是用以指代“本我”和“超我”
+<a name="mfn3">3</a>: 当导入一个包时，该包下的文件里所有init()函数都会被执行，然而，有些时候我们并不需要把整个包都导入进来，仅仅是是希望它执行init()函数而已。这个时候就可以使用 import _ 引用该包。即使用`import _ "pkg"`只是引用该包，仅仅是为了调用init()函数，所以无法通过包名来调用包中的其他函数。
+<a name="mfn4">4</a>: 不是特别确定此处In-Band的含义，个人推测In-Band表示返回值中混合了表示错误信息的值，需要调用方区别处理，而Out-Band
+<a name="mfn5">5</a>: 此处原文有补充说明，翻译不确定，绝大多数情况下"id"不是用以指代“本我”和“超我”
 which is pretty much all cases when it's not the "id" as in "ego", "superego"
-[^6]:不确定含义，原文 familiarity admits brevity
+<a name="mfn6">6</a>: 不确定含义，原文 familiarity admits brevity
