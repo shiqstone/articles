@@ -8,7 +8,7 @@
 - [Crypto Rand](#Crypto-Rand)
 - [Declaring Empty Slices](#Declaring-Empty-Slices-声明空切片)
 - [Doc Comments](#Doc-Comments-文档注释)
-- [Don't Panic](#Don't-Panic-不要使用-panic-)
+- [Don't Panic](#Don't-Panic-不要使用\`panic\`)
 - [Error Strings](#Error-Strings-错误信息)
 - [Examples](#Examples-示例)
 - [Goroutine Lifetimes](#Goroutine-Lifetimes-Goroutine-生命周期)
