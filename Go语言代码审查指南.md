@@ -452,7 +452,7 @@ Package context defines the Context type, which carries deadlines, cancellation 
 
 A function that is never request-specific may use context.Background(), but err on the side of passing a Context even if you think you don't need to. The default case is to pass a Context; only use context.Background() directly if you have a good reason why the alternative is a mistake.
 
-结合代码注释以及官方博文(https://blog.golang.org/context)讨论，推断 Background 方法会返回一个 non-nil 的空 Context，通常用在主函数、初始化、测试等地方，作为请求开始的根 Context；因此除了这些起始位置，一般不建议在中间代码使用Background()。
+结合代码注释以及官方博文(https://blog.golang.org/context) 讨论，推断 Background 方法会返回一个 non-nil 的空 Context，通常用在主函数、初始化、测试等地方，作为请求开始的根 Context；因此除了这些起始位置，一般不建议在中间代码使用Background()。
 
 <a name="mfn3">3</a>: 当导入一个包时，该包下的文件里所有init()函数都会被执行，然而，有些时候我们并不需要把整个包都导入进来，仅仅是是希望它执行init()函数而已。这个时候就可以使用 import _ 引用该包。即使用`import _ "pkg"`只是引用该包，仅仅是为了调用init()函数，所以无法通过包名来调用包中的其他函数。
 
